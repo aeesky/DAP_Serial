@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <!-- 串口设置 -->
+  <PortName Caption="串口号">COM1</PortName>
+  <BaudRate Caption="波特率">9600</BaudRate>
+
+  <!-- 深度探测设置 -->
+  <DataAcquisitionInterval Caption="数据采集时间(秒)">2</DataAcquisitionInterval>
+  <DataAcquisitionSaveInterval Caption="数据保存周期(全局)">3</DataAcquisitionSaveInterval>
+
+  <!-- 实时深度探测曲线设置 -->
+  <RealtimeCurveTitle Caption="实时曲线标题">实时深度探测曲线</RealtimeCurveTitle>
+  <RealtimeCurveColor Caption="实时曲线颜色">#FFFF0000</RealtimeCurveColor>
+  <RealtimeCurveCelling Caption="实时曲线上限">100</RealtimeCurveCelling>
+  <RealtimeCurveFloor Caption="实时曲线下限">0</RealtimeCurveFloor>
+  <RealtimeCurveInterval Caption="实时曲线时间(秒)">1</RealtimeCurveInterval>
+
+  <!-- 系统文本设置 -->
+  <AppTitle Caption="程序标题">电缆管道深度精确探测系统</AppTitle>
+  <About Caption="关于">关于电缆管道深度精确探测系统</About>
+  <Phone Caption="电话">电话：0757-</Phone>
+  <WebSite Caption="网址">网址：www.gdfs.csg.cn</WebSite>
+</Config>

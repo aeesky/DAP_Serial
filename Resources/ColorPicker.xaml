@@ -1,0 +1,185 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:DAP_Serial.Controls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- ColorPicker 颜色开始 -->
+
+    <LinearGradientBrush x:Key="ColorPickerSplitFill" EndPoint="0,0" StartPoint="0,1">
+        <GradientStop Color="#FFA0A0A0" Offset="0"/>
+        <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="ColorPickerItemBorderBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="ColorPickerItemBackground" Color="Transparent"/>
+    <LinearGradientBrush x:Key="ColorPickerItemSelectedBorderBrush" EndPoint="1,1" StartPoint="0,0">
+        <GradientStop Color="#FFA0A0A0" Offset="0"/>
+        <GradientStop Color="#FFA0A0A0" Offset="0.50"/>
+        <GradientStop Color="White" Offset="0.51"/>
+        <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ColorPickerItemSelectedBackground" Color="#FFF"/>
+    <SolidColorBrush x:Key="ColorPickerItemStroke" Color="#FFF0F0F0"/>
+    <SolidColorBrush x:Key="ColorPickerItemPanelBackground" Color="#F0F0F0"/>
+
+    <Thickness x:Key="ColorPickerItemBorderThickness">1</Thickness>
+    <Thickness x:Key="ColorPickerItemPadding">2</Thickness>
+    <sys:Double x:Key="ColorPickerItemStrokeThickness">1</sys:Double>
+
+    <!-- ColorPicker 颜色结束 -->
+    
+    <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+        <Border x:Name="Border"
+			    BorderBrush="{TemplateBinding BorderBrush}"
+			    Background="{TemplateBinding Background}"
+			    BorderThickness="2">
+            <Border Background="White"
+                    Width="20"
+                    Margin="0.5"
+                    HorizontalAlignment="Right">
+                <Path x:Name="Arrow"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+		          StrokeThickness="2"
+                  Data="M 0 0 L 4 5 L 8 0" >
+                    <Path.Stroke>
+                        <SolidColorBrush Color="Black"/>
+                    </Path.Stroke>
+                </Path>
+            </Border>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ComboBoxTextBox"
+                 TargetType="{x:Type TextBox}">
+        <Border x:Name="PART_ContentHost"
+          Focusable="False"
+          Background="{TemplateBinding Background}" />
+    </ControlTemplate>
+
+    <Style TargetType="ctrls:ColorPicker">
+    	<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="Margin" Value="3"/>
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource ColorPickerItemStyle}"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ctrls:ColorPicker">
+                    <Grid>
+                        <ToggleButton
+                            x:Name="ToggleButton"
+                            Template="{StaticResource ComboBoxToggleButton}"
+                            Grid.Column="2"
+                            Focusable="false"
+                            ClickMode="Press"
+						    Background="White"
+						    BorderBrush="Silver"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, 
+                            RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Rectangle
+                            x:Name="SelectedRectangle"
+		                    IsHitTestVisible="False"
+		                    Margin="6,6,26,6"
+                            Stroke="Black"
+                            StrokeThickness="1"
+		                    VerticalAlignment="Stretch"
+		                    HorizontalAlignment="Stretch"/>
+                        <Popup
+                            x:Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            PopupAnimation="Slide">
+                            <Grid 
+                                x:Name="DropDown"
+                                SnapsToDevicePixels="True">
+                                <Border
+                                    x:Name="DropDownBorder"
+                                    BorderThickness="2"
+                                    BorderBrush="Black"
+                                    Background="{DynamicResource ColorPickerItemPanelBackground}"/>
+                                <Grid Margin="4,6">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Button x:Name="TransparentButton" Content="透明颜色"/>
+                                    <UniformGrid
+                                        Grid.Row="1"
+                                        Columns="7"
+                                        IsItemsHost="True"
+                                        KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    <Rectangle
+                                        Grid.Row="2"
+                                        Fill="{DynamicResource ColorPickerSplitFill}"
+                                        Margin="4,6"
+                                        StrokeThickness="0"
+                                        Height="2"/>
+                                    <Button
+                                            x:Name="OthersButton"
+                                            Grid.Row="3"
+                                            Content="其他颜色..."/>
+                                </Grid>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="Popup" Property="AllowsTransparency" Value="true">
+                            <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0" />
+                        </Trigger>
+                        <Trigger SourceName="Popup" Property="IsOpen" Value="True">
+                            <Setter TargetName="ToggleButton" Property="Background" Value="#FF00AAAA"/>
+                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="Black"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="ToggleButton" Property="Background" Value="#FF00AAAA"/>
+                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ColorPickerItemStyle" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Background" Value="{DynamicResource ColorPickerItemBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ColorPickerItemBackground}"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Width" Value="18"/>        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border SnapsToDevicePixels="true"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{DynamicResource ColorPickerItemBorderThickness}"
+                            Padding="{DynamicResource ColorPickerItemPadding}">
+                        <Rectangle Stroke="{DynamicResource ColorPickerItemStroke}"
+                                   Fill="{Binding Value}"
+                                   ToolTip="{Binding DisplayName}"
+                                   StrokeThickness="{DynamicResource ColorPickerItemStrokeThickness}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ColorPickerItemSelectedBackground}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource ColorPickerItemSelectedBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="Silver"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
